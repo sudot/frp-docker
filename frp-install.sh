@@ -5,6 +5,8 @@ BASE_PATH=$(cd `dirname $0`; pwd)
 FRP_VERSION=0.27.0
 FRP_FILE=frp_${FRP_VERSION}_linux_amd64
 
+cd $BASE_PATH
+
 if [ ! -f ${FRP_FILE}.tar.gz ]; then
     wget -O ${FRP_FILE}.tar.gz https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/${FRP_FILE}.tar.gz
 fi
@@ -34,3 +36,6 @@ docker run --name frp \
            -v /etc/localtime:/etc/localtime:ro \
            -v $BASE_PATH/frps.ini:/opt/frp/frps.ini \
            frp
+
+rm -rf frp
+rm -rf $FRP_FILE
