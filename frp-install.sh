@@ -2,7 +2,7 @@
 # 项目根目录
 BASE_PATH=$(cd `dirname $0`; pwd)
 
-FRP_VERSION=0.25.1
+FRP_VERSION=0.27.0
 FRP_FILE=frp_${FRP_VERSION}_linux_amd64
 
 if [ ! -f ${FRP_FILE}.tar.gz ]; then
