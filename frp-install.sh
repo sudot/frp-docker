@@ -33,6 +33,7 @@ docker run --name frp \
            --network $NETWORK_NAME \
            -d \
            -p 7000:7000 \
+           -p 7500:7500 \
            -e TZ="Asia/Shanghai" \
            -v /etc/localtime:/etc/localtime:ro \
            -v $BASE_PATH/frps.ini:/opt/frp/frps.ini \
