@@ -1,22 +1,23 @@
 #!/bin/bash
 # 项目根目录
 BASE_PATH=$(cd `dirname $0`; pwd)
-
-FRP_VERSION=0.27.0
-FRP_FILE=frp_${FRP_VERSION}_linux_amd64
-
 cd $BASE_PATH
+export PATH=$BASE_PATH:$PATH
+chmod +x jq
+FRP_VERSION=$(curl -s https://api.github.com/repos/fatedier/frp/releases/latest | jq -r '.tag_name')
+FRP_FILE_NAME=frp_${FRP_VERSION#*v}_linux_amd64
+FRP_FILE=${FRP_FILE_NAME}.tar.gz
 
-if [ ! -f ${FRP_FILE}.tar.gz ]; then
-    wget -O ${FRP_FILE}.tar.gz https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/${FRP_FILE}.tar.gz
+if [ ! -f ${FRP_FILE} ]; then
+    wget -O ${FRP_FILE} https://github.com/fatedier/frp/releases/download/${FRP_VERSION}/${FRP_FILE}
 fi
 
 if [ ! -d ${FRP_FILE} ]; then
-    tar -zxf ${FRP_FILE}.tar.gz
+    tar -zxf ${FRP_FILE}
 fi
 
 if [ ! -d frp ]; then
-    mv ${FRP_FILE} frp
+    mv ${FRP_FILE_NAME} frp
 fi
 
 #创建docker容器互联网络
@@ -38,4 +39,4 @@ docker run --name frp \
            frp
 
 rm -rf frp
-rm -rf $FRP_FILE
+rm -rf $FRP_FILE_NAME
