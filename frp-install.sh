@@ -4,7 +4,13 @@ BASE_PATH=$(cd `dirname $0`; pwd)
 cd $BASE_PATH
 export PATH=$BASE_PATH:$PATH
 chmod +x jq
-FRP_VERSION=$(curl -s https://api.github.com/repos/fatedier/frp/releases/latest | jq -r '.tag_name')
+
+FRP_VERSION=
+while [ -z "$FRP_VERSION" ]
+do
+    FRP_VERSION=$(curl -s https://api.github.com/repos/fatedier/frp/releases/latest | jq -r '.tag_name')
+done
+
 FRP_FILE_NAME=frp_${FRP_VERSION#*v}_linux_amd64
 FRP_FILE=${FRP_FILE_NAME}.tar.gz
 
